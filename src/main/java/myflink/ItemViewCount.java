@@ -1,6 +1,6 @@
 package myflink;
 
-public static class ItemViewCount {
+public  class ItemViewCount {
     public long itemId;     // 商品ID
     public long windowEnd;  // 窗口结束时间戳
     public long viewCount;  // 商品的点击量
@@ -11,4 +11,5 @@ public static class ItemViewCount {
         result.windowEnd = windowEnd;
         result.viewCount = viewCount;
         return result;
+    }
 }

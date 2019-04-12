@@ -1,6 +1,6 @@
 package myflink;
 
-public static class UserBehavior {
+public class UserBehavior {
     public long userId;         // 用户ID
     public long itemId;         // 商品ID
     public int categoryId;      // 商品类目ID

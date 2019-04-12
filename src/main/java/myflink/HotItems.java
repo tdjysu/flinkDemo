@@ -60,5 +60,8 @@ public class HotItems {
                 .keyBy("windowEnd")
                 .process(new TopNHotItems(3));  // 求点击量前3名的商品
 
+        topItems.print();
+        env.execute("Hot Items Job");
+
     }
 }

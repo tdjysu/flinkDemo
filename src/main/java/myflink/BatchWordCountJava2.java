@@ -18,8 +18,9 @@ public class BatchWordCountJava2 {
                 .flatMap(new LineSplitter())
                 .groupBy(0)
                 .sum(1);
-
         wordCounts.print();
+
+
     }
 
     public static class LineSplitter implements FlatMapFunction<String, Tuple2<String, Integer>> {

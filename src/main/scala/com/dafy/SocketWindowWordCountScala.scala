@@ -30,12 +30,13 @@ object SocketWindowWordCountScala {
     //   Linux 下用 nc -lk 10086
     //需要加上这一行隐式转换 否则在调用flatmap方法的时候会报错
     import org.apache.flink.api.scala._
-    // 解析数据, 分组, 窗口化, 并且聚合求SUM
+    // 解析数据,(把数据打平) 分组, 窗口化, 并且聚合求SUM
     val windowCounts = text
       .flatMap { w => w.split("\\s") }
       .map { w => WordWithCount(w, 1) }
       .keyBy("word")
       .timeWindow(Time.seconds(5), Time.seconds(1))
+//        .reduce((a,b)=>windowCounts(a.word,a.count + b.count))
       .sum("count")
     // 打印输出并设置使用一个并行度
     windowCounts.print().setParallelism(1)

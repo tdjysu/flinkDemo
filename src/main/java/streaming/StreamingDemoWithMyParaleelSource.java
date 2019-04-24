@@ -1,10 +1,11 @@
-package streaming.custormSource;
+package streaming;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
+import streaming.custormSource.MyParalleSource;
 
 /**
  * 使用多行度的Source

@@ -9,7 +9,7 @@ object  BatchWordCountScala {
     val text:DataSet[String] = env.fromElements(
       "Who's there?",
       "I think I hear them. Stand, ho! Who's there?")
-    text.print()
+//    text.print()
 val counts = text.flatMap {
       _.toLowerCase.split(" ") filter {
         _.nonEmpty
@@ -17,8 +17,9 @@ val counts = text.flatMap {
     }
       .map {(_, 1)}
       .groupBy(0)
-      .sum(1)
+      .sum(1).setParallelism(1)
 
     counts.print()
+
   }
 }

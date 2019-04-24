@@ -1,22 +1,24 @@
-package streaming.custormSource;
+package streaming;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.time.Time;
+import streaming.custormSource.MyNoParalleSource;
 
 /**
- * 使用多行度的Source
+ * 使用并行度为1的Source
  */
-public class StreamingDemoWithMyRichParaleelSource {
+public class StreamingDemoWithMyNoParaleelSource {
     public static void main(String[] args) throws Exception{
 
 //       获取Flink的运行环境\
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-//        获取数据源,默认并行度为电脑cup核数
-        DataStreamSource text = env.addSource(new MyRichParalleSource()).setParallelism(2);
+//        获取数据源
+//        注意针对此source,只能设计并行度为1
+        DataStreamSource text = env.addSource(new MyNoParalleSource());
         DataStream<Long> num = text.map(new MapFunction<Long,Long>() {
             @Override
             public Long map(Long value) throws Exception {
@@ -27,8 +29,8 @@ public class StreamingDemoWithMyRichParaleelSource {
 //        每2秒处理一次数据
         DataStream<Long> sum = num.timeWindowAll(Time.seconds(2)).sum(0);
 //        打印结果
-        sum.print();
-        String jobNmae = StreamingDemoWithMyRichParaleelSource.class.getName();
+        sum.print().setParallelism(2);
+        String jobNmae = StreamingDemoWithMyNoParaleelSource.class.getName();
         env.execute(jobNmae);
     }
 

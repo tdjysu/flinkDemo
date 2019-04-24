@@ -5,7 +5,7 @@ package streaming.custormSource;
  */
 
 import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction;
-import javax.security.auth.login.Configuration;
+import org.apache.flink.configuration.Configuration;
 
 
 public class MyRichParalleSource extends RichParallelSourceFunction<Long> {
@@ -35,14 +35,20 @@ public class MyRichParalleSource extends RichParallelSourceFunction<Long> {
         this.isRunning = false;
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     /**
      * 实现获取链接的代码
      * @throws Exception
      */
 
-    @Override
-    public void open() throws Exception {
-        open();
+
+    public  void open (Configuration paramaters) throws Exception {
+        System.out.println("--------Source open------");
+        super.open(paramaters);
     }
 
 

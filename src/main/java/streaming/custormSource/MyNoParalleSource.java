@@ -2,6 +2,8 @@ package streaming.custormSource;
 
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
+
+
 public class MyNoParalleSource implements SourceFunction<Long> {
 
     private boolean isRunning = true;

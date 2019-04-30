@@ -1,6 +1,5 @@
-package com.dafy
+package com.dafy.streaming
 
-import org.apache.flink.api.java.utils.ParameterTool
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.windowing.time.Time
 

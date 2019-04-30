@@ -1,7 +1,6 @@
-package com.dafy
+package com.dafy.batch
 
-import org.apache.flink.api.scala.ExecutionEnvironment
-import org.apache.flink.api.scala._
+import org.apache.flink.api.scala.{ExecutionEnvironment, _}
 
 object  BatchWordCountScala {
   def main(args: Array[String]): Unit = {

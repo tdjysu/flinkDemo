@@ -1,8 +1,8 @@
-package com.dafy.streaming
+package com.dafy.streaming.sink
 
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.redis.RedisSink
-import org.apache.flink.streaming.connectors.redis.common.config.{FlinkJedisClusterConfig, FlinkJedisPoolConfig}
+import org.apache.flink.streaming.connectors.redis.common.config.FlinkJedisPoolConfig
 import org.apache.flink.streaming.connectors.redis.common.mapper.{RedisCommand, RedisCommandDescription, RedisMapper}
 
 object StreamingDataToRedisScala {
@@ -12,8 +12,7 @@ object StreamingDataToRedisScala {
 
     val text = env.socketTextStream("localhost",6973,'\n')
 
-
-    val wordsData_1 = text.map(line=>("1_words_scala",line))
+    val wordsData_1 = text.map(line=>("words_scala",line))
 
     val conf = new FlinkJedisPoolConfig.Builder().setHost("localhost").setPort(6379).build()
 

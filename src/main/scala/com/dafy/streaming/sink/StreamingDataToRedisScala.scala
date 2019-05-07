@@ -11,7 +11,8 @@ object StreamingDataToRedisScala {
      val  env : StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 
     val text = env.socketTextStream("localhost",6973,'\n')
-
+    //    增加隐式转换
+    import org.apache.flink.api.scala._
     val wordsData_1 = text.map(line=>("words_scala",line))
 
     val conf = new FlinkJedisPoolConfig.Builder().setHost("localhost").setPort(6379).build()

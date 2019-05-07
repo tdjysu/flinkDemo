@@ -4,7 +4,7 @@ import com.dafy.streaming.customerSource.MyParallelSourceScala
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.windowing.time.Time
 
-object MyRichParallesSourceScala {
+object MyRichParallesSource_Scala {
   def main(args:Array[String]):Unit= {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 //    增加隐式转换
@@ -18,7 +18,7 @@ object MyRichParallesSourceScala {
     })
     val sumData = mapData.timeWindowAll(Time.seconds(2)).sum(0)
     sumData.print().setParallelism(2)
-    val jobName = MyRichParallesSourceScala.getClass.getName
+    val jobName = MyRichParallesSource_Scala.getClass.getName
     env.execute(jobName)
 }
 }

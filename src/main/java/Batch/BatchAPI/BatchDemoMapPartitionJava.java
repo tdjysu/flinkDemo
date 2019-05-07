@@ -5,6 +5,8 @@ package Batch.BatchAPI;
 import org.apache.flink.api.common.functions.MapPartitionFunction;
 import org.apache.flink.api.java.DataSet;
 
+import org.apache.flink.api.java.ExecutionEnvironment;
+import org.apache.flink.api.java.operators.DataSource;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.util.Collector;
@@ -16,11 +18,12 @@ import java.util.Iterator;
 
 public class BatchDemoMapPartitionJava {
     public static void main(String[] args) throws Exception {
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
         ArrayList<String> dataList = new ArrayList<String>();
         dataList.add("hello flink");
         dataList.add("hello spark");
-        DataStreamSource<String> text = env.fromCollection(dataList);
+        DataSource<String> text =  env.fromCollection(dataList);
+
 
 /*        text.map(new MapFunction<String, String>() {
             @Override

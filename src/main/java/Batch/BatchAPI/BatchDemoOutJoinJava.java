@@ -31,15 +31,56 @@ public class BatchDemoOutJoinJava {
         DataSource<Tuple2<Integer, String>> text1 = env.fromCollection(data1);
         DataSource<Tuple2<Integer, String>> text2 = env.fromCollection(data2);
 
-        text1.join(text2).where(0)//指定第一个数据集中需要进行比较的元素角标
-                .equalTo(0)   //指定第二个数据集中需要进行比较的元素角标
-                .with(new JoinFunction<Tuple2<Integer,String>, Tuple2<Integer,String>, Tuple3<Integer,String,String>>() { //通过With方法
+
+//        left join
+//second
+        /*text1.leftOuterJoin(text2)
+                .where(0)
+                .equalTo(0)
+                .with(new JoinFunction<Tuple2<Integer,String>, Tuple2<Integer,String>, Tuple3<Integer,String,String>>() {
                     @Override
                     public Tuple3<Integer, String, String> join(Tuple2<Integer, String> first, Tuple2<Integer, String> second) throws Exception {
+                        if(second == null)
+                            return new Tuple3<Integer, String, String>(first.f0,first.f1,"unknow");
+                        else
+                            return new Tuple3<Integer, String, String>(first.f0,first.f1,second.f1);
 
-                        return new Tuple3<>(first.f0,first.f1,second.f1);
+                    }
+                }).print();*/
+
+//right join
+/*        text1.rightOuterJoin(text2)
+                .where(0)
+                .equalTo(0)
+                .with(new JoinFunction<Tuple2<Integer,String>, Tuple2<Integer,String>, Tuple3<Integer,String,String>>() {
+
+                    @Override
+                    public Tuple3<Integer, String, String> join(Tuple2<Integer, String> first, Tuple2<Integer, String> second) throws Exception {
+                        if(first == null)
+                            return new Tuple3<Integer, String, String>(second.f0,"unknowName",second.f1);
+                        else
+                            return new Tuple3<Integer, String, String>(second.f0,first.f1,second.f1);
+                    }
+                }).print();*/
+
+//        full outer join
+
+        text1.fullOuterJoin(text2)
+                .where(0)
+                .equalTo(0)
+                .with(new JoinFunction<Tuple2<Integer,String>, Tuple2<Integer,String>, Tuple3<Integer,String,String>>() {
+                    @Override
+                    public Tuple3<Integer, String, String> join(Tuple2<Integer, String> first, Tuple2<Integer, String> second) throws Exception {
+                        if (first == null ){
+                            return new Tuple3<Integer, String, String>(second.f0,"unknowName",second.f1);
+                        }else if (second == null){
+                            return  new Tuple3<Integer, String, String>(first.f0,first.f1,"unknow");
+                        }else {
+                            return  new Tuple3<Integer, String, String>(second.f0,first.f1,second.f1);
+                        }
                     }
                 }).print();
+
 //通过Map方法,这里用Map和上面用with的结果是一致的
 /*        text1.join(text2).where(0).equalTo(0).map(new MapFunction<Tuple2<Tuple2<Integer,String>,Tuple2<Integer,String>>, Tuple3<Integer,String,String>>() {
 
